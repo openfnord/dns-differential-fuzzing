@@ -1039,13 +1039,19 @@ pub(crate) fn search_known_differences<'a>(
             )];
             // This fails if the answer_idx is usize::MAX, in which case no answer was received
             let Some(answer_idx) =
-                left[format!(".fuzz_result.response_idxs.{}", query_count - 1)].as_i64() else {return};
+                left[format!(".fuzz_result.response_idxs.{}", query_count - 1)].as_i64()
+            else {
+                return;
+            };
 
             // Check the last send answer to the resolver.
             // This is the minimal count between queries and answers.
             // If queries is higher than they all go unanswered, also leading to a servfail.
             let Some(answer_count) =
-                left[format!(".fuzz_case.server_responses.{answer_idx}.answers.#count")].as_i64() else {return};
+                left[format!(".fuzz_case.server_responses.{answer_idx}.answers.#count")].as_i64()
+            else {
+                return;
+            };
             // If all answers are different than qtype this is a match
             let all_answer_types_differ = (0..answer_count).all(|i| {
                 let answer_type =
@@ -1092,13 +1098,19 @@ pub(crate) fn search_known_differences<'a>(
             )];
             // This fails if the answer_idx is usize::MAX, in which case no answer was received
             let Some(answer_idx) =
-                left[format!(".fuzz_result.response_idxs.{}", query_count - 1)].as_i64() else {return};
+                left[format!(".fuzz_result.response_idxs.{}", query_count - 1)].as_i64()
+            else {
+                return;
+            };
 
             // Check the last send answer to the resolver.
             // This is the minimal count between queries and answers.
             // If queries is higher than they all go unanswered, also leading to a servfail.
             let Some(answer_count) =
-                left[format!(".fuzz_case.server_responses.{answer_idx}.answers.#count")].as_i64() else {return};
+                left[format!(".fuzz_case.server_responses.{answer_idx}.answers.#count")].as_i64()
+            else {
+                return;
+            };
             // If all answers are different than qclass this is a match
             let any_answer_class_differs = (0..answer_count).any(|i| {
                 let answer_class = &left

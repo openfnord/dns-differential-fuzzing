@@ -358,7 +358,7 @@ fn make_new_record(mut rng: impl Rng, label_set: &[String]) -> Record {
 
 /// Create a minimal server response matching the available client query
 fn make_new_response(rng: impl Rng, label_set: &[String], client_query: &Query) -> Message {
-    let mut edns = trust_dns_proto::op::Edns::new();
+    let mut edns = Edns::new();
     edns.set_dnssec_ok(false)
         .set_max_payload(1200)
         .set_version(0);
@@ -367,8 +367,8 @@ fn make_new_response(rng: impl Rng, label_set: &[String], client_query: &Query) 
     server_response
         .set_authoritative(true)
         .set_id(0)
-        .set_message_type(trust_dns_proto::op::MessageType::Response)
-        .set_op_code(trust_dns_proto::op::OpCode::Query)
+        .set_message_type(MessageType::Response)
+        .set_op_code(OpCode::Query)
         .set_recursion_available(false)
         .set_edns(edns)
         .set_recursion_desired(false)

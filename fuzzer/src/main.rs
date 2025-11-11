@@ -839,14 +839,14 @@ async fn mutate(state: &FuzzingState) -> (FuzzSuite, BTreeMap<FuzzCaseId, FuzzCa
     for id in
         mutateable_test_cases.get_and_requeue_n(state.fuzz_suite_size - state.fuzz_suite_min_random)
     {
-        let fc_meta = crate::mutations::mutate_fuzz_case(fuzz_cases[&id].clone(), &mut *rng);
+        let fc_meta = mutations::mutate_fuzz_case(fuzz_cases[&id].clone(), &mut *rng);
         meta_cases.insert(fc_meta.fuzz_case.id, fc_meta.clone());
         test_cases.push(fc_meta.fuzz_case.clone());
     }
     drop(fuzz_cases);
 
     while test_cases.len() < state.fuzz_suite_size {
-        let fc_meta = crate::mutations::new_fuzz_case(&mut *rng);
+        let fc_meta = mutations::new_fuzz_case(&mut *rng);
         meta_cases.insert(fc_meta.fuzz_case.id, fc_meta.clone());
         test_cases.push(fc_meta.fuzz_case.clone());
     }
